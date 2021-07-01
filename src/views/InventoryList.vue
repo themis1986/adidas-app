@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h1>This is the about page</h1>
+  <div class="">
+    <h1>This is the Inventory page</h1>
   </div>
 </template>
->
+
 <script>
 export default {};
 </script>
