@@ -8,21 +8,26 @@
         <v-btn class="ml-4" color="">Search</v-btn>
       </v-col>
 
-      <v-col class="d-flex justify-center col-12 col-sm-6 ">
-        <h1>Welcome Team!</h1>
-      </v-col>
-      <v-col class=" px-12 text-center col-12 col-sm-6">
-        <p>
-          To start using the ADIDAS Mismatched pairs application hit the
-          <span class="highlighted">New</span> tab in the navigation menu and
-          register the mismatched product you found in the store!<br />To search
-          for an item already registered use the
-          <span class="highlighted">Search field </span>above (Use the unique
-          product code in the search field)!
-        </p>
-      </v-col>
-    </v-row></v-container
-  >
+      <v-row class="mt-16">
+        <v-col class="d-flex justify-center col-12 col-sm-4 ">
+          <h1>Welcome Team!</h1>
+        </v-col>
+        <v-col class=" px-16 text-center col-12 col-sm-8">
+          <p>
+            To start using the ADIDAS Mismatched pairs application hit the
+            <span class="highlighted">New</span> tab in the navigation menu and
+            register the mismatched product you found in the store!<br />To
+            search for an item already registered use the
+            <span class="highlighted">Search field </span>above (Use the unique
+            product code in the search field)!You can also see for the list of
+            all reagistered mismatched products in the
+            <span class="highlighted">Inventory</span> page from the navigation
+            menu!
+          </p>
+        </v-col>
+      </v-row>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

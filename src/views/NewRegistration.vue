@@ -118,11 +118,18 @@ export default {
     };
   },
   methods: {
+    modifyData() {
+      const code = this.usersData.productCode.toUpperCase();
+      const info = this.usersData.generalInfo.toLowerCase();
+
+      this.usersData.productCode = code;
+      this.usersData.generalInfo = info;
+    },
     sendInfo() {
-      console.log(this.usersData);
+      // console.log(this.usersData);
       const url =
         'https://in-store-operations-app-default-rtdb.europe-west1.firebasedatabase.app/surveys.json';
-
+      this.modifyData();
       axios
         .post(url, this.usersData)
         .then(res => console.log(res))
