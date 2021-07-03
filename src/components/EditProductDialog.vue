@@ -101,14 +101,10 @@
           <v-btn color="blue darken-1" text @click="$emit('toggleDialog')">
             Close
           </v-btn>
-          <v-btn color="green darken-1" text @click="$emit('toggleDialog')">
+          <v-btn color="green darken-1" text @click="$emit('updateItem')">
             Update
           </v-btn>
-          <v-btn
-            color="red darken-1"
-            text
-            @click="$emit('toggleDialog', 'deleteItem')"
-          >
+          <v-btn color="red darken-1" text @click="$emit('deleteItem')">
             Delete
           </v-btn>
         </v-card-actions>
