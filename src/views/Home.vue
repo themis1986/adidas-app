@@ -3,9 +3,20 @@
     <v-row class="home d-flex align-content-center ">
       <v-col class="d-flex justify-center align-center col-12 mt-10">
         <div class="">
-          <v-text-field label="Search item" color="black"> </v-text-field>
+          <v-text-field
+            label="Enter product code"
+            color="black"
+            v-model="searchedValue"
+          >
+          </v-text-field>
         </div>
-        <v-btn class="ml-4" color="">Search</v-btn>
+        <v-btn class="ml-4" @click="searchDatabase">Search</v-btn>
+        <v-progress-circular
+          v-if="loading"
+          indeterminate
+          color="dark"
+          class="ml-3"
+        ></v-progress-circular>
       </v-col>
 
       <v-row class="mt-16">
@@ -27,14 +38,102 @@
         </v-col>
       </v-row>
     </v-row>
+    <edit-product-dialog
+      :dialog="toggleDialog"
+      :usersData="foundProduct"
+      @toggleDialog="toggle"
+      @deleteItem="softDelete"
+      @updateItem="update"
+    >
+    </edit-product-dialog>
   </v-container>
 </template>
 
 <script>
+import axios from 'axios';
+import EditProductDialog from '../components/EditProductDialog.vue';
 export default {
   name: 'Home',
+  components: { EditProductDialog },
+  emits: ['toggleDialog', 'deleteItem', 'updateItem'],
+  data() {
+    return {
+      searchedValue: '',
+      id: [],
+      results: [],
+      foundProduct: {},
+      toggleDialog: false,
+      loading: false
+    };
+  },
+  methods: {
+    searchDatabase() {
+      if (!this.searchedValue) return;
+      if (Object.keys(this.foundProduct).length !== 0) {
+        this.foundProduct = {};
+      }
+      this.loading = !this.loading;
+      const url =
+        'https://in-store-operations-app-default-rtdb.europe-west1.firebasedatabase.app/surveys.json';
+      axios.get(url).then(res => {
+        const data = res.data;
+        this.results = Object.values(data);
+        this.id = Object.keys(data);
+        this.results.forEach((result, i) => (result.id = this.id[i]));
+        // console.log(this.results);
+        for (const res of this.results) {
+          if (res.productCode === this.searchedValue.toUpperCase()) {
+            this.foundProduct = { ...res };
+            this.loading = !this.loading;
+            break;
+          }
+        }
 
-  components: {}
+        this.searchedValue = '';
+        if (Object.keys(this.foundProduct).length === 0) {
+          console.log('nothing found');
+          this.loading = !this.loading;
+          return;
+        }
+        this.toggle();
+      });
+    },
+    toggle() {
+      this.toggleDialog = !this.toggleDialog;
+    },
+    softDelete() {
+      // console.log(this.foundProduct.id);
+
+      this.results.forEach((result, i) => {
+        if (result.id === this.foundProduct.id) {
+          // this.results.splice(i, 1);
+          result.active = !result.active;
+          // console.log(result.active);
+          const url =
+            'https://in-store-operations-app-default-rtdb.europe-west1.firebasedatabase.app/surveys';
+          axios.patch(`${url}/${result.id}.json`, {
+            active: result.active
+          });
+        }
+      });
+      this.toggle();
+    },
+    update() {
+      this.results.forEach((result, i) => {
+        if (result.id === this.foundProduct.id) {
+          delete this.foundProduct.id;
+
+          const url =
+            'https://in-store-operations-app-default-rtdb.europe-west1.firebasedatabase.app/surveys';
+
+          axios.patch(`${url}/${result.id}.json`, this.foundProduct);
+        }
+      });
+      this.toggle();
+    }
+  },
+  mounted() {},
+  updated() {}
 };
 </script>
 

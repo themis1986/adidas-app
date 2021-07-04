@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-form class="register">
+  <v-container class="main">
+    <v-form class="register mt-md-16">
       <v-row class="px-10 mt-5">
         <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
           <v-text-field label="Name" v-model="usersData.name"></v-text-field>
@@ -57,7 +57,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
                     v-model="usersData.date"
-                    label="Picker in dialog"
+                    label="Select a date"
                     prepend-icon="mdi-calendar"
                     readonly
                     v-bind="attrs"
@@ -143,7 +143,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 .register {
   height: 100%;
   background-color: #f5f5f5;

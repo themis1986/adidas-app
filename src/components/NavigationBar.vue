@@ -10,7 +10,8 @@
               max-width="110"
               min-width="100"
               src="../assets/Adidas_Logo.svg"
-            ></v-img>
+            >
+            </v-img>
           </v-col>
           <v-col cols="8 d-none d-sm-flex justify-end align-center">
             <h1 class="text-h5 text-center">

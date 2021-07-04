@@ -1,5 +1,6 @@
 <template class="main">
   <v-row justify="center">
+    <slot></slot>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title class="d-flex justify-center pt-5 pb-0">
@@ -67,7 +68,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-text-field
                             v-model="usersData.date"
-                            label="Picker in dialog"
+                            label="Select a date"
                             prepend-icon="mdi-calendar"
                             readonly
                             v-bind="attrs"
@@ -139,16 +140,6 @@ export default {
         'Checked/Stolen',
         'Checked/Damaged'
       ]
-      // usersData: {
-      //   active: true
-      //   // name: '',
-      //   // department: '',
-      //   // productCode: '',
-      //   // generalInfo: '',
-      //   // details: '',
-      //   // searchStatus: '',
-      //   // date: ''
-      // }
     };
   }
 };

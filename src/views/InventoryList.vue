@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class="main">
-    <v-row class=" d-flex justify-center my-5">
+  <v-container fluid class=" main mt-7">
+    <v-row class=" d-flex justify-center my-16">
       <h1 class="text-center">Welcome to your Inventory page!</h1>
     </v-row>
     <v-row class=" d-flex pa-1 pa-sm-5 align-center">
@@ -100,6 +100,8 @@ export default {
     updateItemsPerPage() {
       if (window.innerWidth < 600) {
         this.options.itemsPerPage = 1;
+      } else {
+        this.options.itemsPerPage = 5;
       }
     },
     loadResults() {
@@ -167,11 +169,12 @@ export default {
   },
   updated() {
     this.loadResults();
+    this.updateItemsPerPage();
   }
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .main {
   height: 100%;
   background-image: linear-gradient(
