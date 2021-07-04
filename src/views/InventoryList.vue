@@ -1,15 +1,15 @@
 <template>
-  <v-container fluid class="">
-    <v-row class="d-flex justify-center my-5">
-      <h1>Welcome to your Inventory page!</h1>
+  <v-container fluid class="main">
+    <v-row class=" d-flex justify-center my-5">
+      <h1 class="text-center">Welcome to your Inventory page!</h1>
     </v-row>
-    <v-row class=" d-flex pa-5 align-center">
-      <v-col class="pa-5 ">
+    <v-row class=" d-flex pa-1 pa-sm-5 align-center">
+      <v-col class=" pa-2 pa-sm-5 px-lg-16 col-12 col-md-6  ">
         <p class="text-center">
           In this page you can review all the registered products!<br /><br />
           You can open any of the already registered items seen in the list!
           Just hit the product and a new window will popup showing all the
-          pre-registered information about this specific product!<br />
+          pre-registered information about this specific product!<br /><br />
           You can review a registration, update some of the information if you
           want to and also delete a product that you may not need anymore!
           <br /><br />
@@ -18,7 +18,7 @@
           results!
         </p>
       </v-col>
-      <v-col class="d-flex justify-center align-center">
+      <v-col class="d-flex justify-center align-center col-12 col-md-6">
         <v-progress-circular
           v-if="!listLoaded"
           indeterminate
@@ -36,23 +36,29 @@
           </v-card-title>
           <v-data-table
             dark
+            mobile-breakpoint="xs"
+            :options="options"
             :headers="headers"
             :items="results"
             :search="search"
-            :items-per-page="5"
+            :items-per-page="options.itemsPerPage"
             class="elevation-1"
             @click:row="selectRegisteredItem"
+            :footer-props="{
+              itemsPerPageOptions: [1, 5, 10]
+            }"
           >
           </v-data-table>
         </v-card>
       </v-col>
     </v-row>
-    <!-- <v-btn @click="loadResults">Load</v-btn> -->
+
     <edit-product-dialog
       :dialog="toggleDialog"
       :usersData="resultsObject"
       @toggleDialog="toggle"
       @deleteItem="softDelete"
+      @updateItem="update"
     ></edit-product-dialog>
   </v-container>
 </template>
@@ -68,6 +74,10 @@ export default {
       search: '',
       listLoaded: false,
       toggleDialog: false,
+      itemsPerPageSelect: [1, 5, 10],
+      options: {
+        itemsPerPage: 5
+      },
       headers: [
         {
           text: 'Name',
@@ -85,11 +95,21 @@ export default {
       resultsObject: {}
     };
   },
+  computed: {},
   methods: {
+    updateItemsPerPage() {
+      if (window.innerWidth < 600) {
+        this.options.itemsPerPage = 1;
+      }
+    },
     loadResults() {
       const url =
         'https://in-store-operations-app-default-rtdb.europe-west1.firebasedatabase.app/surveys.json';
       axios.get(url).then(res => {
+        if (!res.data) {
+          this.listLoaded = true;
+          return;
+        }
         // console.log(res.data);
         const data = res.data;
         // console.log(Object.values(data));
@@ -112,7 +132,7 @@ export default {
       return (this.toggleDialog = !this.toggleDialog);
     },
     softDelete() {
-      console.log(this.resultsObject.id);
+      // console.log(this.resultsObject.id);
 
       this.results.forEach((result, i) => {
         if (result.id === this.resultsObject.id) {
@@ -126,14 +146,41 @@ export default {
           });
         }
       });
-
+      this.toggle();
+    },
+    update() {
+      this.results.forEach((result, i) => {
+        if (result.id === this.resultsObject.id) {
+          delete this.resultsObject.id;
+          // console.log(this.resultsObject);
+          const url =
+            'https://in-store-operations-app-default-rtdb.europe-west1.firebasedatabase.app/surveys';
+          axios.patch(`${url}/${result.id}.json`, this.resultsObject);
+        }
+      });
       this.toggle();
     }
   },
   mounted() {
     this.loadResults();
+    this.updateItemsPerPage();
+  },
+  updated() {
+    this.loadResults();
   }
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.main {
+  height: 100%;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(#919693, 0.8),
+      rgba(#d8d8d8, 0.8)
+    ),
+    url(../assets/inventory.jpg);
+  background-size: cover;
+  background-position: bottom left;
+}
+</style>

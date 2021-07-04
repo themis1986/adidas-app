@@ -1,21 +1,21 @@
-<template>
+<template class="main">
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title class="d-flex justify-center pt-5 pb-0">
           <span class="text-h5">Edit Item</span>
         </v-card-title>
-        <v-card-text>
-          <v-container>
+        <v-card-text class="">
+          <v-container class="px-0">
             <v-form class="register">
-              <v-row class="px-10 mt-5">
-                <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
+              <v-row class="px-5 px-sm-10 mt-5">
+                <v-col class=" col-12 ">
                   <v-text-field
                     label="Name"
                     v-model="usersData.name"
                   ></v-text-field>
                 </v-col>
-                <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
+                <v-col class=" col-12 ">
                   <v-select
                     :items="storeDepartments"
                     label="Select Department"
@@ -23,22 +23,22 @@
                   ></v-select>
                 </v-col>
               </v-row>
-              <v-row class="px-10">
-                <v-col class="col-12 col-sm-6">
+              <v-row class="px-5 px-sm-10">
+                <v-col class="col-12 ">
                   <v-text-field
                     label="Product Code (ex.AB1234)"
                     v-model="usersData.productCode"
                   ></v-text-field>
                 </v-col>
-                <v-col class="col-12 col-sm-6">
+                <v-col class="col-12 ">
                   <v-text-field
                     label="Genral Info (ex. product name)"
                     v-model="usersData.generalInfo"
                   ></v-text-field>
                 </v-col>
               </v-row>
-              <v-row class="d-flex px-10 mt-sm-5 mt-0 ">
-                <v-col class="col-sm-6 col-12">
+              <v-row class="d-flex px-5 px-sm-10 mt-sm-5 mt-0 ">
+                <v-col class=" col-12">
                   <v-textarea
                     filled
                     label="Details"
@@ -154,4 +154,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="scss"></style>

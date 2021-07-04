@@ -80,7 +80,7 @@
       </v-row>
       <v-row class="px-10 mt-5">
         <v-col class="d-flex justify-center align-center">
-          <v-btn color="#7cd668" @click="sendInfo">Register</v-btn>
+          <v-btn color="#7cd668" @click="sendInfo">Add</v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -98,7 +98,7 @@ export default {
       menu: false,
       modal: false,
 
-      storeDepartments: ['Shoe', 'Apparel'],
+      storeDepartments: ['Shoe', 'Apparel', 'Accessories/Other'],
       status: [
         'Pending',
         'Checked/Wrong sale',

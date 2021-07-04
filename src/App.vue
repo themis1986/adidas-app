@@ -1,6 +1,8 @@
 <template>
-  <v-app>
-    <div class="navigation-bar"><navigation-bar></navigation-bar></div>
+  <v-app id="app">
+    <div class="navigation-bar">
+      <navigation-bar></navigation-bar>
+    </div>
 
     <router-view></router-view>
   </v-app>
@@ -17,6 +19,9 @@ export default {
 };
 </script>
 <style lang="scss">
+#app {
+  font-family: 'Lato', sans-serif;
+}
 .navigation-bar {
   height: 125px;
 }
