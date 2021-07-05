@@ -1,12 +1,17 @@
 <template>
   <v-container class="main">
-    <v-form class="register mt-md-16">
+    <v-form ref="form" class="register mt-md-16" id="form">
       <v-row class="px-10 mt-5">
         <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
-          <v-text-field label="Name" v-model="usersData.name"></v-text-field>
+          <v-text-field
+            :rules="rules"
+            label="Your Name"
+            v-model="usersData.name"
+          ></v-text-field>
         </v-col>
         <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
           <v-select
+            :rules="rules"
             :items="storeDepartments"
             label="Select Department"
             v-model="usersData.department"
@@ -16,12 +21,14 @@
       <v-row class="px-10">
         <v-col class="col-12 col-sm-6">
           <v-text-field
+            :rules="rules"
             label="Product Code (ex.AB1234)"
             v-model="usersData.productCode"
           ></v-text-field>
         </v-col>
         <v-col class="col-12 col-sm-6">
           <v-text-field
+            :rules="rules"
             label="Genral Info (ex. product name)"
             v-model="usersData.generalInfo"
           ></v-text-field>
@@ -30,6 +37,7 @@
       <v-row class="d-flex px-10 mt-sm-5 mt-0 ">
         <v-col class="col-sm-6 col-12">
           <v-textarea
+            :rules="rules"
             filled
             label="Details"
             placeholder="Be as much descriptive as you can in order to help other colleagues search for it in the future!"
@@ -40,6 +48,7 @@
           <v-row class="d-flex flex-column">
             <v-col class="d-flex align-start">
               <v-select
+                :rules="rules"
                 :items="status"
                 label="Status"
                 class=""
@@ -56,6 +65,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    :rules="rules"
                     v-model="usersData.date"
                     label="Select a date"
                     prepend-icon="mdi-calendar"
@@ -80,7 +90,7 @@
       </v-row>
       <v-row class="px-10 mt-5">
         <v-col class="d-flex justify-center align-center">
-          <v-btn color="#7cd668" @click="sendInfo">Add</v-btn>
+          <v-btn dark color="#333333" @click="sendInfo">Add</v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -92,6 +102,15 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      rules: [
+        value => {
+          if (!value) {
+            return 'Required field!';
+          } else {
+            return true;
+          }
+        }
+      ],
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -107,43 +126,55 @@ export default {
       ],
       usersData: {
         active: true
-        // name: '',
-        // department: '',
-        // productCode: '',
-        // generalInfo: '',
-        // details: '',
-        // searchStatus: '',
-        // date: ''
       }
     };
   },
   methods: {
     modifyData() {
-      const code = this.usersData.productCode.toUpperCase();
-      const info = this.usersData.generalInfo.toLowerCase();
-
+      const code = this.usersData.productCode?.toUpperCase();
+      const info = this.usersData.generalInfo?.toLowerCase();
+      if (!this.usersData.productCode && !this.usersData.generalInfo) return;
       this.usersData.productCode = code;
       this.usersData.generalInfo = info;
     },
     sendInfo() {
-      // console.log(this.usersData);
+      if (Object.values(this.usersData).length !== 8) {
+        this.$refs.form.reset();
+        const payload = 'All fields must be completed!';
+        this.$store.commit('showSnackbar', payload);
+        this.usersData = {
+          active: true
+        };
+        return;
+      }
+
       const url =
         'https://in-store-operations-app-default-rtdb.europe-west1.firebasedatabase.app/surveys.json';
       this.modifyData();
       axios
         .post(url, this.usersData)
-        .then(res => console.log(res))
+        .then(res => {
+          if (res.status === 200) {
+            const payload = 'New Product added!';
+            this.$store.commit('showSnackbar', payload);
+            this.$refs.form.reset();
+            this.usersData = {
+              active: true
+            };
+          }
+        })
         .catch(err => console.log(err));
-
-      this.usersData = {
-        active: true
-      };
     }
-  }
+  },
+  mounted() {},
+  updated() {}
 };
 </script>
 
 <style scoped lang="scss">
+@import '~vuetify/src/components/VBtn/_variables.scss';
+@import '/src/sass/variables.scss';
+
 .register {
   height: 100%;
   background-color: #f5f5f5;

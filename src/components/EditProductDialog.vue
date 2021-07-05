@@ -2,7 +2,7 @@
   <v-row justify="center">
     <slot></slot>
     <v-dialog v-model="dialog" persistent max-width="600px">
-      <v-card>
+      <v-card id="dialog">
         <v-card-title class="d-flex justify-center pt-5 pb-0">
           <span class="text-h5">Edit Item</span>
         </v-card-title>
@@ -102,10 +102,24 @@
           <v-btn color="blue darken-1" text @click="$emit('toggleDialog')">
             Close
           </v-btn>
-          <v-btn color="green darken-1" text @click="$emit('updateItem')">
+          <v-btn
+            color="green darken-1"
+            text
+            @click="
+              $emit('updateItem');
+              $store.dispatch('openSnackbar', 'Product information updated!');
+            "
+          >
             Update
           </v-btn>
-          <v-btn color="red darken-1" text @click="$emit('deleteItem')">
+          <v-btn
+            color="red darken-1"
+            text
+            @click="
+              $emit('deleteItem');
+              $store.dispatch('openSnackbar', 'Product deleted!');
+            "
+          >
             Delete
           </v-btn>
         </v-card-actions>
@@ -141,6 +155,14 @@ export default {
         'Checked/Damaged'
       ]
     };
+  },
+  methods: {
+    scrollToTop() {
+      document.getElementById('dialog').scrollIntoView({ behavior: 'smooth' });
+    }
+  },
+  updated() {
+    this.scrollToTop();
   }
 };
 </script>

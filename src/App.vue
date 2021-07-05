@@ -5,14 +5,31 @@
     </div>
 
     <router-view></router-view>
+    <br />
+    <v-footer padless class="mt10">
+      <v-row class=" pa-1 pa-sm-3 pb-sm-2">
+        <v-col
+          class="d-flex justify-center justify-sm-start  col-12 col-sm-6 pb-0 pb-sm-2"
+        >
+          <p>Created by S.o.F Creations.</p>
+        </v-col>
+        <v-col class="text-center text-sm-right col-12 col-sm-6 pt-0 pt-sm-2 ">
+          {{ new Date().getFullYear() }} —
+          <strong>All Rights Reserved <sup>&copy;</sup></strong>
+        </v-col></v-row
+      >
+    </v-footer>
+
+    <snackbar></snackbar>
   </v-app>
 </template>
 
 <script>
 import NavigationBar from './components/NavigationBar.vue';
+import Snackbar from './components/Snackbar.vue';
 export default {
   name: 'App',
-  components: { NavigationBar },
+  components: { NavigationBar, Snackbar },
   data() {
     return {};
   }

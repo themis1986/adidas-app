@@ -1,22 +1,23 @@
 <template>
-  <v-container fluid>
-    <v-row class="home d-flex align-content-center ">
+  <v-container fluid id="home">
+    <v-row class="home d-flex align-content-center">
       <v-col class="d-flex justify-center align-center col-12 mt-10">
-        <div class="">
+        <v-form ref="form" class="d-flex align-center">
           <v-text-field
             label="Enter product code"
             color="black"
             v-model="searchedValue"
+            :rules="textRules"
           >
           </v-text-field>
-        </div>
-        <v-btn class="ml-4" @click="searchDatabase">Search</v-btn>
-        <v-progress-circular
-          v-if="loading"
-          indeterminate
-          color="dark"
-          class="ml-3"
-        ></v-progress-circular>
+          <v-btn class="ml-4" @click="searchDatabase">Search</v-btn>
+          <v-progress-circular
+            v-if="loading"
+            indeterminate
+            color="dark"
+            class="ml-3"
+          ></v-progress-circular>
+        </v-form>
       </v-col>
 
       <v-row class="mt-16">
@@ -51,6 +52,8 @@
 
 <script>
 import axios from 'axios';
+// import goTo from 'vuetify/lib/services/goto';
+
 import EditProductDialog from '../components/EditProductDialog.vue';
 export default {
   name: 'Home',
@@ -58,6 +61,15 @@ export default {
   emits: ['toggleDialog', 'deleteItem', 'updateItem'],
   data() {
     return {
+      textRules: [
+        value => {
+          if (!value) {
+            return 'Field must not be empty!';
+          } else {
+            return true;
+          }
+        }
+      ],
       searchedValue: '',
       id: [],
       results: [],
@@ -68,7 +80,11 @@ export default {
   },
   methods: {
     searchDatabase() {
-      if (!this.searchedValue) return;
+      if (!this.searchedValue) {
+        const payload = 'Search field empty.Try again!';
+        this.$store.dispatch('openSnackbar', payload);
+        return;
+      }
       if (Object.keys(this.foundProduct).length !== 0) {
         this.foundProduct = {};
       }
@@ -88,10 +104,10 @@ export default {
             break;
           }
         }
-
-        this.searchedValue = '';
+        this.$refs.form.reset();
         if (Object.keys(this.foundProduct).length === 0) {
-          console.log('nothing found');
+          const payload = 'Sorry nothing found!';
+          this.$store.dispatch('openSnackbar', payload);
           this.loading = !this.loading;
           return;
         }
@@ -132,6 +148,7 @@ export default {
       this.toggle();
     }
   },
+
   mounted() {},
   updated() {}
 };
