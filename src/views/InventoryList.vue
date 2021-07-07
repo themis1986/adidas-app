@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class=" main mt-7">
+  <v-container fluid class=" main mt-16">
     <v-row class=" d-flex justify-center my-16">
       <h1 class="text-center">Welcome to your Inventory page!</h1>
     </v-row>

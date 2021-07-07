@@ -1,17 +1,17 @@
 <template>
-  <v-app id="app">
-    <div class="navigation-bar">
+  <v-app id="app" class="">
+    <div class="navigation-bar ">
       <navigation-bar></navigation-bar>
     </div>
 
-    <router-view></router-view>
+    <router-view class=""></router-view>
     <br />
-    <v-footer padless class="mt10">
+    <v-footer padless class="">
       <v-row class=" pa-1 pa-sm-3 pb-sm-2">
         <v-col
           class="d-flex justify-center justify-sm-start  col-12 col-sm-6 pb-0 pb-sm-2"
         >
-          <p>Created by S.o.F Creations.</p>
+          <p>Created by S.o.F. Creations</p>
         </v-col>
         <v-col class="text-center text-sm-right col-12 col-sm-6 pt-0 pt-sm-2 ">
           {{ new Date().getFullYear() }} —
@@ -39,7 +39,9 @@ export default {
 #app {
   font-family: 'Lato', sans-serif;
 }
+
 .navigation-bar {
-  height: 125px;
+  height: 100%;
+  max-height: 125px;
 }
 </style>

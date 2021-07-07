@@ -1,99 +1,107 @@
 <template>
-  <v-container class="main">
-    <v-form ref="form" class="register mt-md-16" id="form">
-      <v-row class="px-10 mt-5">
-        <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
-          <v-text-field
-            :rules="rules"
-            label="Your Name"
-            v-model="usersData.name"
-          ></v-text-field>
-        </v-col>
-        <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
-          <v-select
-            :rules="rules"
-            :items="storeDepartments"
-            label="Select Department"
-            v-model="usersData.department"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row class="px-10">
-        <v-col class="col-12 col-sm-6">
-          <v-text-field
-            :rules="rules"
-            label="Product Code (ex.AB1234)"
-            v-model="usersData.productCode"
-          ></v-text-field>
-        </v-col>
-        <v-col class="col-12 col-sm-6">
-          <v-text-field
-            :rules="rules"
-            label="Genral Info (ex. product name)"
-            v-model="usersData.generalInfo"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row class="d-flex px-10 mt-sm-5 mt-0 ">
-        <v-col class="col-sm-6 col-12">
-          <v-textarea
-            :rules="rules"
-            filled
-            label="Details"
-            placeholder="Be as much descriptive as you can in order to help other colleagues search for it in the future!"
-            v-model="usersData.details"
-          ></v-textarea>
-        </v-col>
-        <v-col>
-          <v-row class="d-flex flex-column">
-            <v-col class="d-flex align-start">
+  <v-container class="pb-0">
+    <v-row class="mb-0 mb-md-10 pt-10 mt-16 mt-sm-0">
+      <v-col class="">
+        <v-form ref="form" class=" mt-md-5 register " id="form">
+          <v-row class="px-10 mt-5">
+            <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
+              <v-text-field
+                :rules="rules"
+                label="Your Name"
+                v-model="usersData.name"
+              ></v-text-field>
+            </v-col>
+            <v-col class="mt-sm-16 mt-0 col-12 col-sm-6">
               <v-select
                 :rules="rules"
-                :items="status"
-                label="Status"
-                class=""
-                v-model="usersData.searchStatus"
+                :items="storeDepartments"
+                label="Select Department"
+                v-model="usersData.department"
               ></v-select>
             </v-col>
-            <v-col>
-              <v-dialog
-                ref="dialog"
-                v-model="modal"
-                :return-value.sync="date"
-                persistent
-                width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    :rules="rules"
-                    v-model="usersData.date"
-                    label="Select a date"
-                    prepend-icon="mdi-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker v-model="usersData.date" scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="modal = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn text color="primary" @click="$refs.dialog.save(date)">
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-dialog>
+          </v-row>
+          <v-row class="px-10">
+            <v-col class="col-12 col-sm-6">
+              <v-text-field
+                :rules="rules"
+                label="Product Code (ex.AB1234)"
+                v-model="usersData.productCode"
+              ></v-text-field>
+            </v-col>
+            <v-col class="col-12 col-sm-6">
+              <v-text-field
+                :rules="rules"
+                label="Genral Info (ex. product name)"
+                v-model="usersData.generalInfo"
+              ></v-text-field>
             </v-col>
           </v-row>
-        </v-col>
-      </v-row>
-      <v-row class="px-10 mt-5">
-        <v-col class="d-flex justify-center align-center">
-          <v-btn dark color="#333333" @click="sendInfo">Add</v-btn>
-        </v-col>
-      </v-row>
-    </v-form>
+          <v-row class="d-flex px-10 mt-sm-5 mt-0 ">
+            <v-col class="col-sm-6 col-12">
+              <v-textarea
+                :rules="rules"
+                filled
+                label="Details"
+                placeholder="Be as much descriptive as you can in order to help other colleagues search for it in the future!"
+                v-model="usersData.details"
+              ></v-textarea>
+            </v-col>
+            <v-col>
+              <v-row class="d-flex flex-column">
+                <v-col class="d-flex align-start">
+                  <v-select
+                    :rules="rules"
+                    :items="status"
+                    label="Status"
+                    class=""
+                    v-model="usersData.searchStatus"
+                  ></v-select>
+                </v-col>
+                <v-col>
+                  <v-dialog
+                    ref="dialog"
+                    v-model="modal"
+                    :return-value.sync="date"
+                    persistent
+                    width="290px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        :rules="rules"
+                        v-model="usersData.date"
+                        label="Select a date"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="usersData.date" scrollable>
+                      <v-spacer></v-spacer>
+                      <v-btn text color="primary" @click="modal = false">
+                        Cancel
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.dialog.save(date)"
+                      >
+                        OK
+                      </v-btn>
+                    </v-date-picker>
+                  </v-dialog>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+          <v-row class="px-10 mt-5">
+            <v-col class="d-flex justify-center align-center">
+              <v-btn dark color="#333333" @click="sendInfo">Add</v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

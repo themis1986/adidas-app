@@ -1,7 +1,7 @@
 <template>
   <v-container class="main d-flex justify-center align-center">
     <v-row class="d-flex pa-10 pa-sm-16 mt-10">
-      <v-col class=" col-12 pa-1 pa-sm-16 text-center ">
+      <v-col class=" col-12 pa-1 pt-16 pa-sm-16 text-center ">
         <p>This project was created for experimental purposes.</p>
         <br />
         <p>

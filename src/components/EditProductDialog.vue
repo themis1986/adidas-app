@@ -147,7 +147,7 @@ export default {
       menu: false,
       modal: false,
       // dialog: false,
-      storeDepartments: ['Shoe', 'Apparel'],
+      storeDepartments: ['Shoe', 'Apparel', 'Accessories/Other'],
       status: [
         'Pending',
         'Checked/Wrong sale',

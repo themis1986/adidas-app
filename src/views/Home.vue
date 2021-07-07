@@ -1,28 +1,29 @@
 <template>
-  <v-container fluid id="home">
+  <v-container fluid class="pb-0" id="home">
     <v-row class="home d-flex align-content-center">
-      <v-col class="d-flex justify-center align-center col-12 mt-10">
-        <v-form ref="form" class="d-flex align-center">
-          <v-text-field
-            label="Enter product code"
-            color="black"
-            v-model="searchedValue"
-            :rules="textRules"
-          >
-          </v-text-field>
-          <v-btn class="ml-4" @click="searchDatabase">Search</v-btn>
-          <v-progress-circular
-            v-if="loading"
-            indeterminate
-            color="dark"
-            class="ml-3"
-          ></v-progress-circular>
-        </v-form>
-      </v-col>
+      <v-row class="mt-16 py-10">
+        <v-col class="d-flex justify-center align-center col-12 mt-10">
+          <v-form ref="form" class="d-flex align-center">
+            <v-text-field
+              label="Enter product code"
+              color="black"
+              v-model="searchedValue"
+              :rules="textRules"
+            >
+            </v-text-field>
+            <v-btn class="ml-4" @click="searchDatabase">Search</v-btn>
+            <v-progress-circular
+              v-if="loading"
+              indeterminate
+              color="dark"
+              class="ml-3"
+            ></v-progress-circular>
+          </v-form> </v-col
+      ></v-row>
 
-      <v-row class="mt-16">
-        <v-col class="d-flex justify-center col-12 col-sm-4 ">
-          <h1>Welcome Team!</h1>
+      <v-row class="mt-1">
+        <v-col class="d-flex justify-center col-12 col-sm-4 pl-10 ">
+          <h1 class="text-sm-center">Welcome Team!</h1>
         </v-col>
         <v-col class=" px-16 text-center col-12 col-sm-8">
           <p>
@@ -53,7 +54,6 @@
 <script>
 import axios from 'axios';
 // import goTo from 'vuetify/lib/services/goto';
-
 import EditProductDialog from '../components/EditProductDialog.vue';
 export default {
   name: 'Home',
@@ -119,7 +119,6 @@ export default {
     },
     softDelete() {
       // console.log(this.foundProduct.id);
-
       this.results.forEach((result, i) => {
         if (result.id === this.foundProduct.id) {
           // this.results.splice(i, 1);
@@ -138,17 +137,14 @@ export default {
       this.results.forEach((result, i) => {
         if (result.id === this.foundProduct.id) {
           delete this.foundProduct.id;
-
           const url =
             'https://in-store-operations-app-default-rtdb.europe-west1.firebasedatabase.app/surveys';
-
           axios.patch(`${url}/${result.id}.json`, this.foundProduct);
         }
       });
       this.toggle();
     }
   },
-
   mounted() {},
   updated() {}
 };
@@ -156,7 +152,7 @@ export default {
 
 <style lang="scss">
 .home {
-  height: 100vh;
+  height: 150vh;
   background-image: linear-gradient(
       to right bottom,
       rgba(#919693, 0.8),
@@ -165,11 +161,9 @@ export default {
     url(../assets/home-bg.jpg);
   background-size: cover;
   background-position: bottom;
-
   h1 {
     color: black;
   }
-
   .highlighted {
     font-weight: 700;
   }
