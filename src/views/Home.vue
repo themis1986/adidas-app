@@ -32,8 +32,8 @@
             register the mismatched product you found in the store!<br />To
             search for an item already registered use the
             <span class="highlighted">Search field </span>above (Use the unique
-            product code in the search field)!You can also see for the list of
-            all reagistered mismatched products in the
+            product code in the search field)!</br>You can also see the list of
+            all pre-registered products in the
             <span class="highlighted">Inventory</span> page from the navigation
             menu!
           </p>
