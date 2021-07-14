@@ -105,10 +105,17 @@ export default {
           }
         }
         this.$refs.form.reset();
+
         if (Object.keys(this.foundProduct).length === 0) {
           const payload = 'Sorry nothing found!';
           this.$store.dispatch('openSnackbar', payload);
           this.loading = !this.loading;
+          return;
+        }
+        if (!this.foundProduct.active) {
+          const payload = 'Sorry nothing found!';
+          this.$store.dispatch('openSnackbar', payload);
+          // this.loading = !this.loading;
           return;
         }
         this.toggle();

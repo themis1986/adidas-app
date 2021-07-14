@@ -158,7 +158,7 @@ export default {
   },
   methods: {
     scrollToTop() {
-      document.getElementById('dialog').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('dialog')?.scrollIntoView({ behavior: 'smooth' });
     }
   },
   updated() {
