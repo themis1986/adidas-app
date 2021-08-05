@@ -94,11 +94,13 @@ export default {
       axios.get(url).then(res => {
         const data = res.data;
         this.results = Object.values(data);
+        // console.log(this.results);
         this.id = Object.keys(data);
+        // console.log(this.id);
         this.results.forEach((result, i) => (result.id = this.id[i]));
         // console.log(this.results);
         for (const res of this.results) {
-          if (res.productCode === this.searchedValue.toUpperCase()) {
+          if (res.productCode === this.searchedValue.toUpperCase() && res.active === true) {
             this.foundProduct = { ...res };
             this.loading = !this.loading;
             break;
